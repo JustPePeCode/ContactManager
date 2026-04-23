@@ -53,15 +53,32 @@ public class Menu(IConsole console, ContactService service) // Menu class that t
     }
     private void HandleChangeContact()
     {
-        console.Write("Welke Contact wilt u aanpassen (voer contact ID in)");
-        var id = int.Parse(console.ReadLine());
-        console.Write("Voer nieuwe Naam in");
+
+        var id = 0;
+        while (service.IdExists(id))
+        {
+            console.Write("Welke Contact wilt u aanpassen (voer contact ID in)");
+            id = int.Parse(console.ReadLine());
+            if (!service.IdExists(id))
+            {
+               break; 
+            }
+            console.WriteLine("Ongeldige Id.");
+            
+
+            
+        }
+
+        console.Write("Voer nieuwe Naam in: ");
         var newName = console.ReadLine();
-        console.Write("Voer nieuwe Email in");
+        console.Write("Voer nieuwe Email in: ");
         var newEmail = console.ReadLine();
-        console.Write("Voer nieuwe GsmNummer in");
-        var NewGsmNummer = console.ReadLine();
-        service.ChangeContact(id,newName,newEmail,NewGsmNummer);
+        console.Write("Voer nieuwe GsmNummer in: ");
+        var newGsmNummer = console.ReadLine();
+        service.ChangeContact(id, newName, newEmail, newGsmNummer);
+        console.WriteLine($"Contact aangepast: {newName} email: {newEmail} gsmnummer:{newGsmNummer}");
+
+
     }
 
 

@@ -21,11 +21,19 @@ public class InMemoryContactRepository()
     {
     return contacts.First(c=>c.Id==id);
     }
+     public bool idExists(int id)
+    {
+      return (contacts.FirstOrDefault(contact =>contact.Id == id)== null);
+    }
+    
     
     public void Change(Contact updated)
     {
+        var oldContact= contacts.FirstOrDefault(contact =>contact.Id == updated.Id);//alternatieve optie
+
         var index = contacts.FindIndex(c=>c.Id == updated.Id);
         contacts[index]=updated;
+        // in de list contacts zoeken we match met "id x" bij de eerst gevonden match updated
     }
 
     public IReadOnlyList<Contact> GetAll()

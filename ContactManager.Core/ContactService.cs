@@ -12,9 +12,13 @@ public class ContactService(InMemoryContactRepository _repository)
     public void ChangeContact(int id, string name, string? email, string? gsmNummer)
     {
         var contact = _repository.GetById(id);
-        contact.Name = name; 
+        contact.Name = name;
         contact.Email = email;
-        contact.GsmNummer= gsmNummer;
+        contact.GsmNummer = gsmNummer;
         _repository.Change(contact);
+    }
+    public bool IdExists(int id)
+    {
+        return _repository.idExists(id);
     }
 }
