@@ -20,7 +20,16 @@ public class InMemoryContactRepository()
 
     public Contact GetById(int id)
     {
-    return contacts.First(c=>c.Id==id);
+        foreach (var contact in contacts)
+        {
+           if (id==contact.Id)
+        {
+            return contact;
+        }  
+        }
+        throw new KeyNotFoundException ("voer een geldige id in");
+       
+    //return contacts.First(c=>c.Id==id);
     }
      public bool idExists(int id)
     {
@@ -30,7 +39,7 @@ public class InMemoryContactRepository()
     
     public void Change(Contact updated)
     {
-        var oldContact= contacts.FirstOrDefault(contact =>contact.Id == updated.Id);//alternatieve optie
+        //var oldContact= contacts.FirstOrDefault(contact =>contact.Id == updated.Id);//alternatieve optie
 
         var index = contacts.FindIndex(c=>c.Id == updated.Id);
         contacts[index]=updated;
@@ -42,10 +51,10 @@ public class InMemoryContactRepository()
         return contacts;
     }
     
-    /*public void Remove(Contact removed)
+    public void Remove(Contact contact)
     {
-        var oldContact=contacts.FirstOrDefault(contact=>contact.Id ==removed.id);
-        var index = contacts.FindIndex(c=>c.Id==removed.Id);
-        contacts[index]=removed;
-    }*/
+        contacts.Remove(contact);
+        //var index = contacts.FindIndex(c=>c.Id==removed.Id);
+        //contacts.RemoveAt(index);
+    }
 }

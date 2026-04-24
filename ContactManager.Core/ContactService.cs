@@ -30,8 +30,13 @@ public class ContactService(InMemoryContactRepository _repository)
         return _repository.GetById(id);
     }
     private bool IsValidEmail(string email)
-{
-    if (string.IsNullOrWhiteSpace(email)) return true; 
-    return email.Contains("@") && email.EndsWith(".com", StringComparison.OrdinalIgnoreCase);
-}
+    {
+        if (string.IsNullOrWhiteSpace(email)) return true;
+        return email.Contains("@") && email.EndsWith(".com", StringComparison.OrdinalIgnoreCase);
+    }
+    public void RemoveContact(int id)
+    {
+        var contact = _repository.GetById(id);
+         _repository.Remove(contact);
+    }
 }

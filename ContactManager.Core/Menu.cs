@@ -18,6 +18,7 @@ public class Menu(IConsole console, ContactService service) // Menu class that t
         console.WriteLine("1. Contact Toevoegen");
         console.WriteLine("2. Contact Aanpassen");
         console.WriteLine("3. Contact Lijst Weergeven");
+        console.WriteLine("4. Contact Verwijderen");
         console.WriteLine("q. Exit"); // Print "q. Exit" as a menu option
         console.Write("Maak uw keuze:"); // Print the prompt (no newline, cursor stays on same line)
     }
@@ -66,7 +67,6 @@ public class Menu(IConsole console, ContactService service) // Menu class that t
             console.WriteLine("Geen contacten gevonden, voeg eerst contacten toe!");
             return;
         }
-
 
         var id = 0;
         while (!service.IdExists(id))
@@ -128,7 +128,54 @@ public class Menu(IConsole console, ContactService service) // Menu class that t
     }
     private void HandleRemoveContact()
     {
+        var contacts = service.GetContacts();
+        if (!contacts.Any())
+        {
+            console.WriteLine("Geen contacten gevonden, voeg eerst contacten toe!");
+            return;
+        }
+        var id = 0;
+        while (!service.IdExists(id))
+        {
+            console.Write("Welke Contact wilt u verwijderen (voer contact ID in): ");
+            var input = console.ReadLine(); // step 2: store input first
+
+            if (!int.TryParse(input, out id)) // step 3: safe conversion
+            {
+                console.WriteLine("Ongeldig invoer, voer een nummer in.");
+                continue;
+            }
+
+            if (service.IdExists(id))
+            {
+                break;
+            }
+            console.WriteLine("Geen contact gevonden met dit ID.");
+        }
+        console.WriteLine("Ben je zeker ? antwoord:(J/N)");
+        var inputTwee = console.ReadLine();
+        while (!string.Equals(inputTwee, "J", StringComparison.OrdinalIgnoreCase) && 
+       !string.Equals(inputTwee, "N", StringComparison.OrdinalIgnoreCase))
+        {
+
+         console.WriteLine("Ongeldig invoer, voer (J/N) in.");
+         inputTwee = console.ReadLine();
         
+        }
+         if(string.Equals(inputTwee, "J" , StringComparison.OrdinalIgnoreCase))
+        {
+            service.RemoveContact(id);
+            console.WriteLine($"{id} verwijdered!");
+
+        }
+        if(string.Equals(inputTwee, "N" , StringComparison.OrdinalIgnoreCase))
+        {
+          console.WriteLine("Verwijderen geannuleerd");  
+        }  
+        
+       
+        
+
     }
 
 
