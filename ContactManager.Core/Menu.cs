@@ -17,6 +17,7 @@ public class Menu(IConsole console, ContactService service) // Menu class that t
     {
         console.WriteLine("1. Contact Toevoegen");
         console.WriteLine("2. Contact Aanpassen");
+        console.WriteLine("3. Contact Lijst Weergeven");
         console.WriteLine("q. Exit"); // Print "q. Exit" as a menu option
         console.Write("Maak uw keuze:"); // Print the prompt (no newline, cursor stays on same line)
     }
@@ -30,6 +31,12 @@ public class Menu(IConsole console, ContactService service) // Menu class that t
                 break;
             case "2":
                 HandleChangeContact();
+                break;
+            case "3":
+                HandleShowContactList();
+                break;
+            case "4":
+                HandleRemoveContact();
                 break;
             case "q":
                 return false; // User typed "q" → return false → running becomes false → loop stops
@@ -53,33 +60,77 @@ public class Menu(IConsole console, ContactService service) // Menu class that t
     }
     private void HandleChangeContact()
     {
+        var contacts = service.GetContacts();
+        if (!contacts.Any())
+        {
+            console.WriteLine("Geen contacten gevonden, voeg eerst contacten toe!");
+            return;
+        }
+
 
         var id = 0;
-        while (service.IdExists(id))
+        while (!service.IdExists(id))
         {
-            console.Write("Welke Contact wilt u aanpassen (voer contact ID in)");
-            id = int.Parse(console.ReadLine());
-            if (!service.IdExists(id))
-            {
-               break; 
-            }
-            console.WriteLine("Ongeldige Id.");
-            
+            console.Write("Welke Contact wilt u aanpassen (voer contact ID in): ");
+            var input = console.ReadLine(); // step 2: store input first
 
-            
+            if (!int.TryParse(input, out id)) // step 3: safe conversion
+            {
+                console.WriteLine("Ongeldig invoer, voer een nummer in.");
+                continue;
+            }
+
+            if (service.IdExists(id))
+            {
+                break;
+            }
+            console.WriteLine("Geen contact gevonden met dit ID.");
         }
+
+        var contact = service.GetContactById(id);
 
         console.Write("Voer nieuwe Naam in: ");
         var newName = console.ReadLine();
+        if (string.IsNullOrWhiteSpace(newName)) newName = contact.Name;
         console.Write("Voer nieuwe Email in: ");
         var newEmail = console.ReadLine();
+        if (string.IsNullOrWhiteSpace(newEmail)) newEmail = contact.Email;
         console.Write("Voer nieuwe GsmNummer in: ");
         var newGsmNummer = console.ReadLine();
+        if (string.IsNullOrWhiteSpace(newGsmNummer)) newGsmNummer = contact.GsmNummer;
         service.ChangeContact(id, newName, newEmail, newGsmNummer);
         console.WriteLine($"Contact aangepast: {newName} email: {newEmail} gsmnummer:{newGsmNummer}");
 
-
     }
+    private void HandleShowContactList()
+    {
+        var contacts = service.GetContacts(); // get the list from the service
+
+        if (!contacts.Any())
+        {
+            console.WriteLine("Contacten lijst is leeg, voeg contacten toe!");
+            return;
+        }
+
+        foreach (var contact in contacts)
+        {
+            console.WriteLine("-----------------------");
+            console.Write("Id nummer:");
+            console.WriteLine(contact.Id.ToString());
+            console.Write("Naam:");
+            console.WriteLine(contact.Name);
+            console.Write("Email:");
+            console.WriteLine(contact.Email);
+            console.Write("GsmNummer:");
+            console.WriteLine(contact.GsmNummer);
+            console.WriteLine("-----------------------");
+        }
+    }
+    private void HandleRemoveContact()
+    {
+        
+    }
+
 
 
 }

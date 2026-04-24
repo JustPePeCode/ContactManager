@@ -11,9 +11,10 @@ public class InMemoryContactRepository()
 
     public void Add(Contact contact)
     {
-        contacts.Add(contact);
+        
         contact.Id = nextId;
         nextId++;
+        contacts.Add(contact);
     }
     
 
@@ -23,7 +24,7 @@ public class InMemoryContactRepository()
     }
      public bool idExists(int id)
     {
-      return (contacts.FirstOrDefault(contact =>contact.Id == id)== null);
+      return (contacts.FirstOrDefault(contact =>contact.Id == id)!= null);
     }
     
     
@@ -40,4 +41,11 @@ public class InMemoryContactRepository()
     {
         return contacts;
     }
+    
+    /*public void Remove(Contact removed)
+    {
+        var oldContact=contacts.FirstOrDefault(contact=>contact.Id ==removed.id);
+        var index = contacts.FindIndex(c=>c.Id==removed.Id);
+        contacts[index]=removed;
+    }*/
 }

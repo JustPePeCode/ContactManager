@@ -21,4 +21,17 @@ public class ContactService(InMemoryContactRepository _repository)
     {
         return _repository.idExists(id);
     }
+    public IReadOnlyList<Contact> GetContacts()
+    {
+        return _repository.GetAll();
+    }
+    public Contact GetContactById(int id)
+    {
+        return _repository.GetById(id);
+    }
+    private bool IsValidEmail(string email)
+{
+    if (string.IsNullOrWhiteSpace(email)) return true; 
+    return email.Contains("@") && email.EndsWith(".com", StringComparison.OrdinalIgnoreCase);
+}
 }
