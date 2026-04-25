@@ -115,10 +115,11 @@ public class AddContactMenuTests
 
         var contact = repository.GetById(1);
         Assert.Equal("Elvis Presley", contact.Name);
-        Assert.Equal("ElevisPresley@mail.com", contact.Email);
+        Assert.Equal("ElvisPresley@mail.com", contact.Email);
         Assert.Equal("9876543210", contact.GsmNummer);
     }
 
+    [Fact]
     public void HandleChangeContact_EmptyInput_KeepsOrignalValue()
     {
         service.AddContact("Elvis", "Elvis@mail.com", "0123456789");
