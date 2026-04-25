@@ -9,8 +9,8 @@ public class ContactRepositoryTests
     {
         // 1. Arrange: Set up your objects
         var repository = new InMemoryContactRepository();
-        var newContact = new Contact("Spoederman","spoederman@hotmail.com","0478125689");
-        var newContactTweede = new Contact("Timmy","Timmy@gmail.com","");
+        var newContact = new Contact("Spoederman", "spoederman@hotmail.com", "0478125689");
+        var newContactTweede = new Contact("Timmy", "Timmy@gmail.com", "");
 
         // 2. Act: Execute the method you are testing
         repository.Add(newContact);
@@ -34,7 +34,7 @@ public class ContactRepositoryTests
     public void NewContact_BeforeBeingAdded_ShouldHaveIdZero()
     {
         // 1. Arrange
-        var newContact = new Contact("SpoederMan","spoederman@hotmail.com", "0478125689");
+        var newContact = new Contact("SpoederMan", "spoederman@hotmail.com", "0478125689");
         // 2. Act (None needed - we are checking the state right after creation)
         // 3. Assert
         // This proves that the ID is 0 because the Repository hasn't "stamped" it yet.

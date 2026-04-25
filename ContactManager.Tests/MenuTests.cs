@@ -62,18 +62,22 @@ public class AddContactMenuTests
             //menu
             "1. Contact Toevoegen",
             "2. Contact Aanpassen",
+            "3. Contact Lijst Weergeven",
+            "4. Contact Verwijderen",
             "q. Exit",
             "Maak uw keuze:",
             //1
             "Voer een naam in: ",
             //type "Spoederman" ENTER
-           
+
             "Voer een email in (mag leeg zijn): ",
             "Voer een gsm nummer in (mag leeg zijn): ",
-             "Contact toegevoegd: Spoederman email: spoederman@hotmail.com gsmnummer:0478125689",
+            "Contact toegevoegd: Spoederman email: spoederman@hotmail.com gsmnummer:0478125689",
             //menu loops
             "1. Contact Toevoegen",
             "2. Contact Aanpassen",
+            "3. Contact Lijst Weergeven",
+            "4. Contact Verwijderen",
             "q. Exit",
             "Maak uw keuze:",
             //q
@@ -82,5 +86,56 @@ public class AddContactMenuTests
         var contact = repository.GetAll()[0];
         Assert.Equal(1, contact.Id);
         Assert.Contains("Spoederman", contact.Name);
+    }
+
+    [Fact]
+    public void HandleChangeContact_NoContacts_ShowsMessage()
+    {
+        console.Input.Enqueue("2");
+        console.Input.Enqueue("q");
+
+        menu.Run();
+
+        Assert.Contains("Geen contacten gevonden, voeg eerst contacten toe!", console.Output);
+    }
+
+    [Fact]
+    public void HandleChangeContact_ValidId_UpdatesContact()
+    {
+        service.AddContact("Elvis", "Elvis@mail.com", "0123456789");
+
+        console.Input.Enqueue("2");
+        console.Input.Enqueue("1");
+        console.Input.Enqueue("Elvis Presley");
+        console.Input.Enqueue("ElvisPresley@mail.com");
+        console.Input.Enqueue("9876543210");
+        console.Input.Enqueue("q");
+
+        menu.Run();
+
+        var contact = repository.GetById(1);
+        Assert.Equal("Elvis Presley", contact.Name);
+        Assert.Equal("ElevisPresley@mail.com", contact.Email);
+        Assert.Equal("9876543210", contact.GsmNummer);
+    }
+
+    public void HandleChangeContact_EmptyInput_KeepsOrignalValue()
+    {
+        service.AddContact("Elvis", "Elvis@mail.com", "0123456789");
+
+        console.Input.Enqueue("2");
+        console.Input.Enqueue("1");
+        console.Input.Enqueue("");
+        console.Input.Enqueue("");
+        console.Input.Enqueue("");
+        console.Input.Enqueue("q");
+
+        menu.Run();
+
+        var contact = repository.GetById(1);
+
+        Assert.Equal("Elvis", contact.Name);
+        Assert.Equal("Elvis@mail.com", contact.Email);
+        Assert.Equal("0123456789", contact.GsmNummer);
     }
 }
