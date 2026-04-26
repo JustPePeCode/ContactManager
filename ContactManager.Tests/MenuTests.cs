@@ -139,4 +139,91 @@ public class AddContactMenuTests
         Assert.Equal("Elvis@mail.com", contact.Email);
         Assert.Equal("0123456789", contact.GsmNummer);
     }
+
+    [Fact]
+    public void HandleChoice_InvalidOption_ShouldShowErrorMessage()
+    {
+        // Given
+        console.Input.Enqueue("5");
+        console.Input.Enqueue("q");
+        // When
+        menu.Run();
+
+        // Then
+        Assert.Contains("Ongeldige optie.", console.Output);
+    }
+
+    [Fact]
+    public void HandleShowContactList_WhenEmpty_ShouldShowEmptyMessage()
+    {
+        //Arrange
+        console.Input.Enqueue("3");
+        console.Input.Enqueue("q");
+
+        //Act
+        menu.Run();
+
+        //Assert
+        Assert.Contains("Contacten lijst is leeg, voeg contacten toe!", console.Output);
+    }
+
+    [Fact]
+    public void HandleShowContactList_ShouldDisplayContacts()
+    {
+        //Arrange
+        service.AddContact("Elvis", "Elvis@mail.com", "0123456789");
+        console.Input.Enqueue("3");
+        console.Input.Enqueue("q");
+
+        //Act
+        menu.Run();
+
+        //Assert
+        Assert.Contains("-----------------------", console.Output);
+        Assert.Contains("Elvis", console.Output);
+    }
+
+    [Fact]
+    public void HandleRemoveContact_WhenEmpty_ShouldShowEmptyMessage()
+    {
+        //Arrange
+        console.Input.Enqueue("4");
+        console.Input.Enqueue("q");
+
+        //Act
+        menu.Run();
+
+        //Assert
+        Assert.Contains("Geen contacten gevonden, voeg eerst contacten toe!", console.Output);
+    }
+
+    [Fact]
+    public void HandleRemoveContact_ConfirmWithJ_ShouldRemoveContact()
+    {
+        service.AddContact("Elvis", "Elvis@mail.com", "0123456789");
+        console.Input.Enqueue("4");
+        console.Input.Enqueue("1");
+        console.Input.Enqueue("J");
+        console.Input.Enqueue("q");
+
+        //Act
+        menu.Run();
+        Assert.Empty(service.GetContacts());
+    }
+
+    [Fact]
+    public void HandleRemoveContact_ConfirmWithN_ShouldCancelRemoval()
+    {
+        service.AddContact("Elvis", "Elvis@mail.com", "0123456789");
+        console.Input.Enqueue("4");
+        console.Input.Enqueue("1");
+        console.Input.Enqueue("N");
+        console.Input.Enqueue("q");
+
+        //Act
+        menu.Run();
+        //Assert
+        Assert.Contains("Verwijderen geannuleerd", console.Output);
+        Assert.Single(service.GetContacts());
+    }
 }
