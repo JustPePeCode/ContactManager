@@ -59,6 +59,7 @@ public class Menu(IConsole console, ContactService service) // Menu class that t
         service.AddContact(name, email, gsmNummer); // Save it via the service
         console.WriteLine($"Contact toegevoegd: {name} email: {email} gsmnummer:{gsmNummer}"); // Confirm it was added
     }
+
     private void HandleChangeContact()
     {
         var contacts = service.GetContacts();
@@ -91,17 +92,22 @@ public class Menu(IConsole console, ContactService service) // Menu class that t
 
         console.Write("Voer nieuwe Naam in: ");
         var newName = console.ReadLine();
-        if (string.IsNullOrWhiteSpace(newName)) newName = contact.Name;
+        if (string.IsNullOrWhiteSpace(newName))
+            newName = contact.Name;
         console.Write("Voer nieuwe Email in: ");
         var newEmail = console.ReadLine();
-        if (string.IsNullOrWhiteSpace(newEmail)) newEmail = contact.Email;
+        if (string.IsNullOrWhiteSpace(newEmail))
+            newEmail = contact.Email;
         console.Write("Voer nieuwe GsmNummer in: ");
         var newGsmNummer = console.ReadLine();
-        if (string.IsNullOrWhiteSpace(newGsmNummer)) newGsmNummer = contact.GsmNummer;
+        if (string.IsNullOrWhiteSpace(newGsmNummer))
+            newGsmNummer = contact.GsmNummer;
         service.ChangeContact(id, newName, newEmail, newGsmNummer);
-        console.WriteLine($"Contact aangepast: {newName} email: {newEmail} gsmnummer:{newGsmNummer}");
-
+        console.WriteLine(
+            $"Contact aangepast: {newName} email: {newEmail} gsmnummer:{newGsmNummer}"
+        );
     }
+
     private void HandleShowContactList()
     {
         var contacts = service.GetContacts(); // get the list from the service
@@ -126,6 +132,7 @@ public class Menu(IConsole console, ContactService service) // Menu class that t
             console.WriteLine("-----------------------");
         }
     }
+
     private void HandleRemoveContact()
     {
         var contacts = service.GetContacts();
@@ -154,30 +161,22 @@ public class Menu(IConsole console, ContactService service) // Menu class that t
         }
         console.WriteLine("Ben je zeker ? antwoord:(J/N)");
         var inputTwee = console.ReadLine();
-        while (!string.Equals(inputTwee, "J", StringComparison.OrdinalIgnoreCase) && 
-       !string.Equals(inputTwee, "N", StringComparison.OrdinalIgnoreCase))
+        while (
+            !string.Equals(inputTwee, "J", StringComparison.OrdinalIgnoreCase)
+            && !string.Equals(inputTwee, "N", StringComparison.OrdinalIgnoreCase)
+        )
         {
-
-         console.WriteLine("Ongeldig invoer, voer (J/N) in.");
-         inputTwee = console.ReadLine();
-        
+            console.WriteLine("Ongeldig invoer, voer (J/N) in.");
+            inputTwee = console.ReadLine();
         }
-         if(string.Equals(inputTwee, "J" , StringComparison.OrdinalIgnoreCase))
+        if (string.Equals(inputTwee, "J", StringComparison.OrdinalIgnoreCase))
         {
             service.RemoveContact(id);
             console.WriteLine($"{id} verwijdered!");
-
         }
-        if(string.Equals(inputTwee, "N" , StringComparison.OrdinalIgnoreCase))
+        if (string.Equals(inputTwee, "N", StringComparison.OrdinalIgnoreCase))
         {
-          console.WriteLine("Verwijderen geannuleerd");  
-        }  
-        
-       
-        
-
+            console.WriteLine("Verwijderen geannuleerd");
+        }
     }
-
-
-
 }

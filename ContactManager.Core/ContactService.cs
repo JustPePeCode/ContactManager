@@ -9,6 +9,7 @@ public class ContactService(InMemoryContactRepository _repository)
     {
         _repository.Add(new Contact(name, email, gsmNummer));
     }
+
     public void ChangeContact(int id, string name, string? email, string? gsmNummer)
     {
         var contact = _repository.GetById(id);
@@ -17,26 +18,32 @@ public class ContactService(InMemoryContactRepository _repository)
         contact.GsmNummer = gsmNummer;
         _repository.Change(contact);
     }
+
     public bool IdExists(int id)
     {
         return _repository.idExists(id);
     }
+
     public IReadOnlyList<Contact> GetContacts()
     {
         return _repository.GetAll();
     }
+
     public Contact GetContactById(int id)
     {
         return _repository.GetById(id);
     }
+
     private bool IsValidEmail(string email)
     {
-        if (string.IsNullOrWhiteSpace(email)) return true;
+        if (string.IsNullOrWhiteSpace(email))
+            return true;
         return email.Contains("@") && email.EndsWith(".com", StringComparison.OrdinalIgnoreCase);
     }
+
     public void RemoveContact(int id)
     {
         var contact = _repository.GetById(id);
-         _repository.Remove(contact);
+        _repository.Remove(contact);
     }
 }
