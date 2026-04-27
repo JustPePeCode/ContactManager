@@ -62,6 +62,8 @@ public class AddContactMenuTests
             //menu
             "1. Contact Toevoegen",
             "2. Contact Aanpassen",
+            "3. Contact Lijst Weergeven",
+            "4. Contact Verwijderen",
             "q. Exit",
             "Maak uw keuze:",
             //1
@@ -74,6 +76,8 @@ public class AddContactMenuTests
             //menu loops
             "1. Contact Toevoegen",
             "2. Contact Aanpassen",
+            "3. Contact Lijst Weergeven",
+            "4. Contact Verwijderen",
             "q. Exit",
             "Maak uw keuze:",
             //q
