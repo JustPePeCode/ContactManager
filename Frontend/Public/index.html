@@ -19,67 +19,11 @@
 
     <section id="contact-list">
 <h2>Contact List</h2>
-<input type="text" placeholder="Enter a name...">
-  <button>Search</button>
-  <button>Add Contact</button>
-<div class="grid">
+<input id ="search-contact-input" type="text" placeholder="Enter a name...">
+  <button id ="search-contact-button">Search</button>
+  <button id ="add-contact-button">Add Contact</button>
+<div class="grid" id="contact-grid">
     
-
-<div class="card">
-      <p class="card-number">1</p>
-      <p class="name">Mark Zuckerberg </p>
-      <p class ="email">markzuckerberg @hotmail.com</p>
-      <p class ="gsm-number">0478217253</p>
-      <button>Change</button>
-      <button>Remove</button>
-    </div>
-
-    <div class="card">
-      <p class="card-number">2</p>
-      <p class="name">Lucas George</p>
-      <p class ="email">lucasgeorge@hotmail.com</p>
-      <p class ="gsm-number">0478217254</p>
-      <button>Change</button>
-      <button>Remove</button>
-      </div>
-
-      <div class="card">
-      <p class="card-number">3</p>
-      <p class="name">Phillippe Léopold Louis Marie</p>
-      <p class ="email">philipléopoldlouislarie@hotmail.com</p>
-      <p class ="gsm-number">0478217255</p>
-      <button>Change</button>
-      <button>Remove</button>
-    </div>
-
-    <div class="card">
-      <p class="card-number">4</p>
-      <p class="name">Armen Dzhigarkhanyan</p>
-      <p class ="email">armendzhigarkhanyan@hotmail.com</p>
-      <p class ="gsm-number">0478217256</p>
-      <button>Change</button>
-      <button>Remove</button>
-    </div>
-
-    <div class="card">
-      <p class="card-number">5</p>
-      <p class="name">Juan Carlos</p>
-      <p class ="email">juancarlos@hotmail.com</p>
-      <p class ="gsm-number">0478217257</p>
-      <button>Change</button>
-      <button>Remove</button>
-    </div>
-
-    <div class="card">
-      <p class="card-number">6</p>
-      <p class="name">Ben Shapiro</p>
-      <p class ="email">benshapiros@hotmail.com</p>
-      <p class ="gsm-number">0478217258</p>
-      <button>Change</button>
-      <button>Remove</button>
-    </div>
-
-
     </div>
 
     </section>
@@ -88,53 +32,45 @@
     <section id="add-contact">
         
   <h2>Add Contact </h2>
-  <form>
-    <label>Naam (required):</label>
-    <input type="text" placeholder="Enter a Name...">
+  <div>
+    <label>Name (required):</label>
+    <input id ="add-contact-input" type="text" placeholder="Enter a Name...">
 
     <label>Email (can be empty):</label>
-    <input type="email" placeholder="Enter an email...">
+    <input id ="add-email-input" type="email" placeholder="Enter an email...">
 
-    <label>GSM nummer (can be empty):</label>
-    <input type="tel" placeholder="Enter a gsm number...">
+    <label>GSM number (can be empty):</label>
+    <input id ="add-gsm-input" type="tel" placeholder="Enter a gsm number...">
 
-    <button type="submit">Add</button>
-  </form>
+    <button id ="add-submit-button" type="button">Add</button>
+  </div>
 </section>
 
    
     <section id="change-contact">
         <h2>Change Contact</h2>
-  <form>
+  <div>
     <label>Naam (required):</label>
-    <input type="text" placeholder="Enter a Name...">
+    <input id ="change-contact-input" type="text" placeholder="Enter a Name...">
 
     <label>Email (can be empty):</label>
-    <input type="email" placeholder="Enter an email...">
+    <input id ="change-email-input" type="email" placeholder="Enter an email...">
 
     <label>GSM nummer (can be empty):</label>
-    <input type="tel" placeholder="Enter a gsm number...">
+    <input id ="change-gsm-input" type="tel" placeholder="Enter a gsm number...">
 
-    <button type="submit">Submit changes</button>
-  </form>
+    <button id ="change-submit-button" type="button">Submit changes</button>
+  </div>
     </section>
 
     
     <section id="remove-contact">
         <h2>Remove Contact</h2>
   <p>Are you sure you want to remove this contact?</p>
-
-  <div class="card">
-    <p class="card-number">1</p>
-    <p class="name">Mark Zuckerberg</p>
-    <p>markzuckerberg@hotmail.com</p>
-    <p>0478217253</p>
-    <button type="Remove"> Remove</button>
-  <button >Keep</button>
-  </div>
-
+  <div id="remove-contact-card"></div>
+ 
   
     </section>
-
+<script type="module" src="../src/main.js"></script>
   </body>
 </html>
