@@ -8,7 +8,6 @@ import {
 import { renderContacts } from "./render.js";
 
 const contactGrid = getById("contact-grid");
-const contactList = getById("contact-list");
 
 const searchContactInput = getById("search-contact-input");
 const searchContactButton = getById("search-contact-button");
@@ -28,8 +27,9 @@ const changeSubmitButton = getById("change-submit-button");
 
 const removeContact = getById("remove-contact");
 const removeContactCard = getById("remove-contact-card");
-const RemoveConfirmButton = getById("confrim-remove-button")
-const RemoveCancelButton = getById("cancel-remove-button")
+const removeConfirmButton = getById("confrim-remove-button");
+const removeCancelButton = getById("cancel-remove-button");
+const quitButton = getById("quit-contactmanger-button");
 let selectedContactId;
 
 hideElement(addContact);
@@ -42,10 +42,10 @@ addSubmitButton.addEventListener("click", () => {
   const name = addContactInput.value;
   const email = addEmailInput.value;
   const gsm = addGsmInput.value;
-   if (name ==="") {
-  alert("name cannot be empty!");
-  return ;
-}
+  if (name === "") {
+    alert("name cannot be empty!");
+    return;
+  }
   const newContact = {
     id: crypto.randomUUID(),
     name: name,
@@ -66,16 +66,14 @@ addSubmitButton.addEventListener("click", () => {
 changeSubmitButton.addEventListener("click", () => {
   const contacts = loadContacts();
   const name = changeContactInput.value;
-      const email = changeEmailInput.value;
-      const gsm = changeGsmInput.value;
-   if (name ==="") {
-  alert("name cannot be empty!");
-  return ;
-}
+  const email = changeEmailInput.value;
+  const gsm = changeGsmInput.value;
+  if (name === "") {
+    alert("name cannot be empty!");
+    return;
+  }
   const updatedContacts = contacts.map((contact) => {
     if (contact.id === selectedContactId) {
-      
-     
       changeContactInput.value = "";
       changeEmailInput.value = "";
       changeGsmInput.value = "";
@@ -118,41 +116,44 @@ contactGrid.addEventListener("click", (event) => {
     selectedContactId = id;
     const selectedContact = contacts.find((contact) => contact.id === id);
     showElement(changeContact);
-    hideElement(contactGrid)
+    hideElement(contactGrid);
 
-    changeContactInput.value= selectedContact.name;
+    changeContactInput.value = selectedContact.name;
     changeEmailInput.value = selectedContact.email;
     changeGsmInput.value = selectedContact.gsm;
   }
   if (buttonName == "Remove") {
-    selectedContactId=id
-    hideElement(contactGrid)
-    showElement(removeContact) 
-    const selectedContact = contacts.find(contact => contact.id === id)
-removeContactCard.innerHTML = `
-  <p class="name">${selectedContact.name}</p>
-  <p class="email">${selectedContact.email}</p>
-  <p class="gsm">${selectedContact.gsm}</p>`
+    selectedContactId = id;
+    hideElement(contactGrid);
+    showElement(removeContact);
+    const selectedContact = contacts.find((contact) => contact.id === id);
+    removeContactCard.innerHTML = `
+  <p class="name">Name: ${selectedContact.name}</p>
+  <p class="email">Email:${selectedContact.email}</p>
+  <p class="gsm">Gsm: ${selectedContact.gsm}</p>`;
   }
 });
 
-RemoveConfirmButton.addEventListener("click", () => {
-  const contacs = loadContacts()
-  const showContacts = contacs.filter(contact=> {
-    return contact.id !=selectedContactId
-  })
-  
-   saveContacts(showContacts);
+removeConfirmButton.addEventListener("click", () => {
+  const contacts = loadContacts();
+  const showContacts = contacts.filter((contact) => {
+    return contact.id != selectedContactId;
+  });
+
+  saveContacts(showContacts);
   renderContacts(showContacts, contactGrid);
-  hideElement(removeContact)
-  showElement(contactGrid)
-})
-RemoveCancelButton.addEventListener("click", () => {
-  hideElement(removeContact)
-  showElement(contactGrid)
-})
+  hideElement(removeContact);
+  showElement(contactGrid);
+});
+removeCancelButton.addEventListener("click", () => {
+  hideElement(removeContact);
+  showElement(contactGrid);
+});
 
 addContactButton.addEventListener("click", () => {
   showElement(addContact);
-  hideElement(contactGrid)
+  hideElement(contactGrid);
+});
+quitButton.addEventListener("click", () => {
+  window.close();
 });
