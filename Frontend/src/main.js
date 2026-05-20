@@ -25,6 +25,12 @@ const changeSubmitButton = document.getElementById("change-submit-button")
 const removeContact = document.getElementById("remove-contact")
 const removeContactCard = document.getElementById("remove-contact-card")
 
+let selectedContactId
+
+hideElement(addContact)
+hideElement(changeContact)
+hideElement(removeContact)
+
 function renderContacts(contacts){
     contactGrid.innerHTML = ""
     contacts.forEach(contact => {
@@ -34,7 +40,9 @@ card.innerHTML = `
   <p class="name">${contact.name}</p>
   <p class="email">${contact.email}</p>
   <p class="gsm">${contact.gsm}</p>
+  <button data-id ="${contact.id}">Change</button>
   <button data-id ="${contact.id}">Remove</button>
+  
 `
 contactGrid.appendChild(card)
 })
@@ -43,6 +51,7 @@ contactGrid.appendChild(card)
 renderContacts(loadContacts())
 
 addSubmitButton.addEventListener("click", () => {
+  
     const name = addContactInput.value
     const email = addEmailInput.value
     const gsm = addGsmInput.value
@@ -54,9 +63,38 @@ addSubmitButton.addEventListener("click", () => {
  contacts.push(newContact)
  saveContacts(contacts) 
  renderContacts(contacts)
+ hideElement(addContact)
 
 })
+
+changeSubmitButton.addEventListener("click", () => {
+  const contacts=loadContacts()
+  const updatedContacts=contacts.map(contact => {
+    if (contact.id === selectedContactId) {
+      const name = changeContactInput.value
+    const email = changeEmailInput.value
+    const gsm = changeGsmInput.value
+ changeContactInput.value = ""
+ changeEmailInput.value = ""
+ changeGsmInput.value = ""
+ const changedContact= { id: contact.id, name: name, email: email, gsm: gsm }
+ 
+ return changedContact
+}
+
+ else{
+  return contact
+ }
+})
+ 
+ saveContacts(updatedContacts) 
+ renderContacts(updatedContacts)
+     hideElement(changeContact)
+  } 
+)
+
 searchContactButton.addEventListener("click", ()=>{
+  
     const searchValue = searchContactInput.value
     const normalizedSearchValue =normalizeSearchText(searchValue)
     const contacts =loadContacts()
@@ -64,4 +102,27 @@ searchContactButton.addEventListener("click", ()=>{
         return contact.name.toLowerCase().includes(normalizedSearchValue)
     })
     renderContacts(filteredContacts)
+})
+contactGrid.addEventListener("click", (event) => {
+  
+   const buttonName =event.target.textContent
+  const id = event.target.dataset.id
+    console.log(id)
+    const contacts = loadContacts()
+    if (buttonName =="Change") {
+      selectedContactId = id
+      showElement(changeContact)
+    }
+    if (buttonName== "Remove") {
+      const showContacts = contacts.filter(contact=>{
+      return contact.id!=id
+    })
+       saveContacts(showContacts)
+    renderContacts(showContacts)
+    }
+   
+})
+
+addContactButton.addEventListener("click", ()=>{
+  showElement(addContact)
 })
