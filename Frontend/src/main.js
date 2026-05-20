@@ -41,6 +41,10 @@ addSubmitButton.addEventListener("click", () => {
   const name = addContactInput.value;
   const email = addEmailInput.value;
   const gsm = addGsmInput.value;
+   if (name ==="") {
+  alert("name cannot be empty!");
+  return ;
+}
   const newContact = {
     id: crypto.randomUUID(),
     name: name,
@@ -59,11 +63,17 @@ addSubmitButton.addEventListener("click", () => {
 
 changeSubmitButton.addEventListener("click", () => {
   const contacts = loadContacts();
-  const updatedContacts = contacts.map((contact) => {
-    if (contact.id === selectedContactId) {
-      const name = changeContactInput.value;
+  const name = changeContactInput.value;
       const email = changeEmailInput.value;
       const gsm = changeGsmInput.value;
+   if (name ==="") {
+  alert("name cannot be empty!");
+  return ;
+}
+  const updatedContacts = contacts.map((contact) => {
+    if (contact.id === selectedContactId) {
+      
+     
       changeContactInput.value = "";
       changeEmailInput.value = "";
       changeGsmInput.value = "";
