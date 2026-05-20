@@ -1,76 +1,94 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="nl">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contact Manager Herb Inc</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-
     <header>
       <h1>Contact Manager</h1>
       <div>
-      <p class="company-name"> Herb Inc.</p>
-      <p class="company-slogan">All herbs must die! </p>
+        <p class="company-name">Herb Inc.</p>
+        <p class="company-slogan">All herbs must die!</p>
       </div>
-       <button type="Quit">Quit</button>
+      <button type="Quit">Quit</button>
     </header>
 
     <section id="contact-list">
-<h2>Contact List</h2>
-<input id ="search-contact-input" type="text" placeholder="Enter a name...">
-  <button id ="search-contact-button">Search</button>
-  <button id ="add-contact-button">Add Contact</button>
-<div class="grid" id="contact-grid">
-    
-    </div>
-
+      <h2>Contact List</h2>
+      <input
+        id="search-contact-input"
+        type="text"
+        placeholder="Enter a name..."
+      />
+      <button id="search-contact-button">Search</button>
+      <button id="add-contact-button">Add Contact</button>
+      <div class="grid" id="contact-grid"></div>
     </section>
 
-    
     <section id="add-contact">
-        
-  <h2>Add Contact </h2>
-  <div>
-    <label>Name (required):</label>
-    <input id ="add-contact-input" type="text" placeholder="Enter a Name...">
+      <h2>Add Contact</h2>
+      <div>
+        <label>Name (required):</label>
+        <input
+          id="add-contact-input"
+          type="text"
+          placeholder="Enter a Name..."
+        />
 
-    <label>Email (can be empty):</label>
-    <input id ="add-email-input" type="email" placeholder="Enter an email...">
+        <label>Email (can be empty):</label>
+        <input
+          id="add-email-input"
+          type="email"
+          placeholder="Enter an email..."
+        />
 
-    <label>GSM number (can be empty):</label>
-    <input id ="add-gsm-input" type="tel" placeholder="Enter a gsm number...">
+        <label>GSM number (can be empty):</label>
+        <input
+          id="add-gsm-input"
+          type="tel"
+          placeholder="Enter a gsm number..."
+        />
 
-    <button id ="add-submit-button" type="button">Add</button>
-  </div>
-</section>
+        <button id="add-submit-button" type="button">Add</button>
+      </div>
+    </section>
 
-   
     <section id="change-contact">
-        <h2>Change Contact</h2>
-  <div>
-    <label>Naam (required):</label>
-    <input id ="change-contact-input" type="text" placeholder="Enter a Name...">
+      <h2>Change Contact</h2>
+      <div>
+        <label>Naam (required):</label>
+        <input
+          id="change-contact-input"
+          type="text"
+          placeholder="Enter a Name..."
+        />
 
-    <label>Email (can be empty):</label>
-    <input id ="change-email-input" type="email" placeholder="Enter an email...">
+        <label>Email (can be empty):</label>
+        <input
+          id="change-email-input"
+          type="email"
+          placeholder="Enter an email..."
+        />
 
-    <label>GSM nummer (can be empty):</label>
-    <input id ="change-gsm-input" type="tel" placeholder="Enter a gsm number...">
+        <label>GSM nummer (can be empty):</label>
+        <input
+          id="change-gsm-input"
+          type="tel"
+          placeholder="Enter a gsm number..."
+        />
 
-    <button id ="change-submit-button" type="button">Submit changes</button>
-  </div>
+        <button id="change-submit-button" type="button">Submit changes</button>
+      </div>
     </section>
 
-    
     <section id="remove-contact">
-        <h2>Remove Contact</h2>
-  <p>Are you sure you want to remove this contact?</p>
-  <div id="remove-contact-card"></div>
- 
-  
+      <h2>Remove Contact</h2>
+      <p>Are you sure you want to remove this contact?</p>
+      <div id="remove-contact-card"></div>
     </section>
-<script type="module" src="../src/main.js"></script>
+    <script type="module" src="../src/main.js"></script>
   </body>
 </html>
