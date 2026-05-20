@@ -1,38 +1,35 @@
-
-
 section {
   padding: 30px 40px;
   border-bottom: 4px solid #ddd;
 }
-body{
-    font-family: Arial, Helvetica, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f5f5f5;
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f5f5;
 }
-header
-{
-    background-color: #2c7a4b;
-    color:white;
-    padding: 20px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+header {
+  background-color: #2c7a4b;
+  color: white;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-header h1{
-    margin: 0;
-    font-size: 28px;
+header h1 {
+  margin: 0;
+  font-size: 28px;
 }
-header .company-name  {
+header .company-name {
   font-size: 40px;
   margin: 4px 0 0;
 }
-header .company-slogan  {
+header .company-slogan {
   font-size: 32px;
   margin: 4px 0 0;
 }
 .company-slogan {
-    font-size: 20px;
+  font-size: 20px;
 }
 .grid {
   display: grid;
@@ -40,14 +37,13 @@ header .company-slogan  {
   gap: 30px;
 }
 .card {
-    background: white;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 16px;
-
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
 }
 .card-number {
-    font-size: 16px;
+  font-size: 16px;
   font-weight: bold;
   color: #2c7a4b;
 }
@@ -64,7 +60,6 @@ button {
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  
 }
 
 button:hover {
@@ -82,25 +77,25 @@ input {
   border: 1px solid #ddd;
   border-radius: 4px;
   margin-bottom: 10px;
-   width: 300px;
+  width: 300px;
 }
 button[type="submit"] {
   display: block;
   margin-top: 10px;
 }
-button[type="Remove"]{
-background-color: red;
+button[type="Remove"] {
+  background-color: red;
 }
 button[type="Remove"]:hover {
   background-color: #a93226;
 }
 button[type="Quit"] {
-    color: black;
+  color: black;
   background-color: white;
-  }
-  button[type="Quit"]:hover{
+}
+button[type="Quit"]:hover {
   background-color: red;
-  }
+}
 
 section:last-child {
   border-bottom: none;

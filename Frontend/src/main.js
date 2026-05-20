@@ -1,128 +1,159 @@
-import {loadContacts,saveContacts} from './storage.js'
-import {normalizeSearchText,showElement,hideElement} from './ui-utils.js'
+import { loadContacts, saveContacts } from "./storage.js";
+import {
+  normalizeSearchText,
+  showElement,
+  hideElement,
+  getById,
+} from "./ui-utils.js";
+import { renderContacts } from "./render.js";
 
+const contactGrid = getById("contact-grid");
 
+const searchContactInput = getById("search-contact-input");
+const searchContactButton = getById("search-contact-button");
+const addContactButton = getById("add-contact-button");
 
-const contactGrid = document.getElementById("contact-grid")
-const contactList= document.getElementById("contact-list")
+const addContact = getById("add-contact");
+const addContactInput = getById("add-contact-input");
+const addEmailInput = getById("add-email-input");
+const addGsmInput = getById("add-gsm-input");
+const addSubmitButton = getById("add-submit-button");
 
-const searchContactInput = document.getElementById("search-contact-input")
-const searchContactButton = document.getElementById("search-contact-button")
-const addContactButton = document.getElementById("add-contact-button")
+const changeContact = getById("change-contact");
+const changeContactInput = getById("change-contact-input");
+const changeEmailInput = getById("change-email-input");
+const changeGsmInput = getById("change-gsm-input");
+const changeSubmitButton = getById("change-submit-button");
 
-const addContact = document.getElementById("add-contact")
-const addContactInput = document.getElementById("add-contact-input")
-const addEmailInput = document.getElementById("add-email-input")
-const addGsmInput = document.getElementById("add-gsm-input")
-const addSubmitButton = document.getElementById("add-submit-button")
+const removeContact = getById("remove-contact");
+const removeContactCard = getById("remove-contact-card");
+const removeConfirmButton = getById("confrim-remove-button");
+const removeCancelButton = getById("cancel-remove-button");
+const quitButton = getById("quit-contactmanger-button");
+let selectedContactId;
 
-const changeContact = document.getElementById("change-contact")
-const changeContactInput = document.getElementById("change-contact-input")
-const changeEmailInput = document.getElementById("change-email-input")
-const changeGsmInput = document.getElementById("change-gsm-input")
-const changeSubmitButton = document.getElementById("change-submit-button")
+hideElement(addContact);
+hideElement(changeContact);
+hideElement(removeContact);
 
-const removeContact = document.getElementById("remove-contact")
-const removeContactCard = document.getElementById("remove-contact-card")
-
-let selectedContactId
-
-hideElement(addContact)
-hideElement(changeContact)
-hideElement(removeContact)
-
-function renderContacts(contacts){
-    contactGrid.innerHTML = ""
-    contacts.forEach(contact => {
-  const card = document.createElement("div")
-card.classList.add("card")
-card.innerHTML = `
-  <p class="name">${contact.name}</p>
-  <p class="email">${contact.email}</p>
-  <p class="gsm">${contact.gsm}</p>
-  <button data-id ="${contact.id}">Change</button>
-  <button data-id ="${contact.id}">Remove</button>
-  
-`
-contactGrid.appendChild(card)
-})
-}
-
-renderContacts(loadContacts())
+renderContacts(loadContacts(), contactGrid);
 
 addSubmitButton.addEventListener("click", () => {
-  
-    const name = addContactInput.value
-    const email = addEmailInput.value
-    const gsm = addGsmInput.value
-   const newContact= { id: crypto.randomUUID(), name: name, email: email, gsm: gsm }
- addContactInput.value = ""
- addEmailInput.value = ""
- addGsmInput.value = ""
- const contacts=loadContacts()
- contacts.push(newContact)
- saveContacts(contacts) 
- renderContacts(contacts)
- hideElement(addContact)
-
-})
+  const name = addContactInput.value;
+  const email = addEmailInput.value;
+  const gsm = addGsmInput.value;
+  if (name === "") {
+    alert("name cannot be empty!");
+    return;
+  }
+  const newContact = {
+    id: crypto.randomUUID(),
+    name: name,
+    email: email,
+    gsm: gsm,
+  };
+  addContactInput.value = "";
+  addEmailInput.value = "";
+  addGsmInput.value = "";
+  const contacts = loadContacts();
+  contacts.push(newContact);
+  saveContacts(contacts);
+  renderContacts(contacts, contactGrid);
+  hideElement(addContact);
+  showElement(contactGrid);
+});
 
 changeSubmitButton.addEventListener("click", () => {
-  const contacts=loadContacts()
-  const updatedContacts=contacts.map(contact => {
+  const contacts = loadContacts();
+  const name = changeContactInput.value;
+  const email = changeEmailInput.value;
+  const gsm = changeGsmInput.value;
+  if (name === "") {
+    alert("name cannot be empty!");
+    return;
+  }
+  const updatedContacts = contacts.map((contact) => {
     if (contact.id === selectedContactId) {
-      const name = changeContactInput.value
-    const email = changeEmailInput.value
-    const gsm = changeGsmInput.value
- changeContactInput.value = ""
- changeEmailInput.value = ""
- changeGsmInput.value = ""
- const changedContact= { id: contact.id, name: name, email: email, gsm: gsm }
- 
- return changedContact
-}
+      changeContactInput.value = "";
+      changeEmailInput.value = "";
+      changeGsmInput.value = "";
+      const changedContact = {
+        id: contact.id,
+        name: name,
+        email: email,
+        gsm: gsm,
+      };
 
- else{
-  return contact
- }
-})
- 
- saveContacts(updatedContacts) 
- renderContacts(updatedContacts)
-     hideElement(changeContact)
-  } 
-)
+      return changedContact;
+    } else {
+      return contact;
+    }
+  });
 
-searchContactButton.addEventListener("click", ()=>{
-  
-    const searchValue = searchContactInput.value
-    const normalizedSearchValue =normalizeSearchText(searchValue)
-    const contacts =loadContacts()
-   const filteredContacts =  contacts.filter(contact=>{
-        return contact.name.toLowerCase().includes(normalizedSearchValue)
-    })
-    renderContacts(filteredContacts)
-})
+  saveContacts(updatedContacts);
+  renderContacts(updatedContacts, contactGrid);
+  hideElement(changeContact);
+  showElement(contactGrid);
+});
+
+searchContactButton.addEventListener("click", () => {
+  const searchValue = searchContactInput.value;
+  const normalizedSearchValue = normalizeSearchText(searchValue);
+  const contacts = loadContacts();
+  const filteredContacts = contacts.filter((contact) => {
+    return contact.name.toLowerCase().includes(normalizedSearchValue);
+  });
+  renderContacts(filteredContacts, contactGrid);
+});
+
 contactGrid.addEventListener("click", (event) => {
-  
-   const buttonName =event.target.textContent
-  const id = event.target.dataset.id
-    console.log(id)
-    const contacts = loadContacts()
-    if (buttonName =="Change") {
-      selectedContactId = id
-      showElement(changeContact)
-    }
-    if (buttonName== "Remove") {
-      const showContacts = contacts.filter(contact=>{
-      return contact.id!=id
-    })
-       saveContacts(showContacts)
-    renderContacts(showContacts)
-    }
-   
-})
+  const buttonName = event.target.textContent;
+  const id = event.target.dataset.id;
 
-addContactButton.addEventListener("click", ()=>{
-  showElement(addContact)
-})
+  console.log(id);
+  const contacts = loadContacts();
+  if (buttonName == "Change") {
+    selectedContactId = id;
+    const selectedContact = contacts.find((contact) => contact.id === id);
+    showElement(changeContact);
+    hideElement(contactGrid);
+
+    changeContactInput.value = selectedContact.name;
+    changeEmailInput.value = selectedContact.email;
+    changeGsmInput.value = selectedContact.gsm;
+  }
+  if (buttonName == "Remove") {
+    selectedContactId = id;
+    hideElement(contactGrid);
+    showElement(removeContact);
+    const selectedContact = contacts.find((contact) => contact.id === id);
+    removeContactCard.innerHTML = `
+  <p class="name">Name: ${selectedContact.name}</p>
+  <p class="email">Email:${selectedContact.email}</p>
+  <p class="gsm">Gsm: ${selectedContact.gsm}</p>`;
+  }
+});
+
+removeConfirmButton.addEventListener("click", () => {
+  const contacts = loadContacts();
+  const showContacts = contacts.filter((contact) => {
+    return contact.id != selectedContactId;
+  });
+
+  saveContacts(showContacts);
+  renderContacts(showContacts, contactGrid);
+  hideElement(removeContact);
+  showElement(contactGrid);
+});
+removeCancelButton.addEventListener("click", () => {
+  hideElement(removeContact);
+  showElement(contactGrid);
+});
+
+addContactButton.addEventListener("click", () => {
+  showElement(addContact);
+  hideElement(contactGrid);
+});
+quitButton.addEventListener("click", () => {
+  window.close();
+});
