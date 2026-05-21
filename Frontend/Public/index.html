@@ -31,12 +31,15 @@
     <section id="add-contact">
       <h2>Add Contact</h2>
       <div>
-        <label>Name (required):</label>
+        <label  >Name (required):</label>
+        <p  class="hidden error-message" id ="add-name-error" type="error message" >Name cannot be empty!</p>
         <input
+        required
           id="add-contact-input"
           type="text"
           placeholder="Enter a Name..."
         />
+        
 
         <label>Email (can be empty):</label>
         <input
@@ -60,12 +63,14 @@
     <section id="change-contact">
       <h2>Change Contact</h2>
       <div>
-        <label>Naam (required):</label>
-        <input
+        <label >Name (required):</label>
+        <p class="hidden error-message" id ="change-name-error"  >Name cannot be empty!</p>
+        <input required
           id="change-contact-input"
           type="text"
           placeholder="Enter a Name..."
         />
+        
 
         <label>Email (can be empty):</label>
         <input

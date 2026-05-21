@@ -35,6 +35,9 @@ const removeConfirmButton = getById("remove-confrim-button");
 const removeCancelButton = getById("remove-cancel-button");
 const quitButton = getById("quit-contactmanger-button");
 
+const changeNameCantBeEmpty = getById ("change-name-error")
+const addNameCantBeEmpty = getById ("add-name-error")
+
 let selectedContactId;
 
 hideElement(addContact);
@@ -48,9 +51,10 @@ addSubmitButton.addEventListener("click", () => {
   const email = addEmailInput.value;
   const gsm = addGsmInput.value;
   if (name === "") {
-    alert("name cannot be empty!");
+    showElement(addNameCantBeEmpty);
     return;
   }
+  hideElement(addNameCantBeEmpty)
   const newContact = {
     id: crypto.randomUUID(),
     name: name,
@@ -74,9 +78,10 @@ changeSubmitButton.addEventListener("click", () => {
   const email = changeEmailInput.value;
   const gsm = changeGsmInput.value;
   if (name === "") {
-    alert("name cannot be empty!");
+    showElement(changeNameCantBeEmpty);
     return;
   }
+  hideElement(changeNameCantBeEmpty)
   const updatedContacts = contacts.map((contact) => {
     if (contact.id === selectedContactId) {
       changeContactInput.value = "";
@@ -164,9 +169,11 @@ quitButton.addEventListener("click", () => {
 });
 addCancelButton.addEventListener("click", () => {
   hideElement(addContact);
+  hideElement(addNameCantBeEmpty)
   showElement(contactList);
 });
 changeCancelButton.addEventListener("click",() => {
   hideElement(changeContact)
+  hideElement(changeNameCantBeEmpty)
   showElement(contactList)
 })

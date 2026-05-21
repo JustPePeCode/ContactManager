@@ -107,3 +107,6 @@ section:last-child {
 .hidden {
   display: none;
 }
+.error-message{
+  color: red;
+}
