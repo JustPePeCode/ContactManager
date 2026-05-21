@@ -13,7 +13,7 @@
         <p class="company-name">Herb Inc.</p>
         <p class="company-slogan">All herbs must die!</p>
       </div>
-      <button id = "quit-contactmanger-button" type="Quit">Quit</button>
+      <button id="quit-contactmanger-button" type="Quit">Quit</button>
     </header>
 
     <section id="contact-list">
@@ -31,15 +31,20 @@
     <section id="add-contact">
       <h2>Add Contact</h2>
       <div>
-        <label  >Name (required):</label>
-        <p  class="hidden error-message" id ="add-name-error" type="error message" >Name cannot be empty!</p>
+        <label>Name (required):</label>
+        <p
+          class="hidden error-message"
+          id="add-name-error"
+          type="error message"
+        >
+          Name cannot be empty!
+        </p>
         <input
-        required
+          required
           id="add-contact-input"
           type="text"
           placeholder="Enter a Name..."
         />
-        
 
         <label>Email (can be empty):</label>
         <input
@@ -63,14 +68,16 @@
     <section id="change-contact">
       <h2>Change Contact</h2>
       <div>
-        <label >Name (required):</label>
-        <p class="hidden error-message" id ="change-name-error"  >Name cannot be empty!</p>
-        <input required
+        <label>Name (required):</label>
+        <p class="hidden error-message" id="change-name-error">
+          Name cannot be empty!
+        </p>
+        <input
+          required
           id="change-contact-input"
           type="text"
           placeholder="Enter a Name..."
         />
-        
 
         <label>Email (can be empty):</label>
         <input
@@ -87,15 +94,19 @@
         />
 
         <button id="change-submit-button" type="button">Submit changes</button>
-        <button id="change-cancel-button"type = "button">Cancel</button>
+        <button id="change-cancel-button" type="button">Cancel</button>
       </div>
     </section>
 
     <section id="remove-contact">
       <h2>Remove Contact</h2>
       <p>Are you sure you want to remove this contact?</p>
-      <button id="remove-confrim-button"type = "button">Yes, im sure Remove contact</button>
-      <button id="remove-cancel-button"type = "button">No,Dont Remove Contact</button>
+      <button id="remove-confrim-button" type="button">
+        Yes, im sure Remove contact
+      </button>
+      <button id="remove-cancel-button" type="button">
+        No,Dont Remove Contact
+      </button>
       <div id="remove-contact-card"></div>
     </section>
     <script type="module" src="../src/main.js"></script>
