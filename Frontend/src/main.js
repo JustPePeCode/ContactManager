@@ -1,4 +1,4 @@
-import { loadContacts, saveContacts } from "./storage.js";
+import { loadContacts } from "./storage.js";
 import {
   normalizeSearchText,
   showElement,
@@ -7,30 +7,36 @@ import {
 } from "./ui-utils.js";
 import { renderContacts } from "./render.js";
 import { initAddContact } from "./addContact.js";
-
-
-const addContact = initAddContact();
-const changeContact = initChangeContact();
-const removeContact = initRemoveContact();
-
+import { initChangeContact } from "./changeContact.js";
+import { initRemoveContact } from "./removeContact.js";
+import { selectedContactId, setSelectedContactId } from "./state.js";
 
 const searchContactInput = getById("search-contact-input");
 const searchContactButton = getById("search-contact-button");
 const quitButton = getById("quit-contactmanger-button");
 const addContactComponent = initAddContact();
-
+const changeContactComponent = initChangeContact();
+const removeContactComponent = initRemoveContact();
+const contactGrid = getById("contact-grid");
+const contactList = getById("contact-list");
 
 addContactComponent.onContactCreated = () => {
-    renderContacts(loadContacts(), contactGrid);
-    showElement(contactList);
+  renderContacts(loadContacts(), contactGrid);
+  showElement(contactList);
 };
 addContactComponent.onAddCanceled = () => {
-    showElement(contactList);
+  showElement(contactList);
 };
 
+changeContactComponent.onContactChanged = ( ) => {
+  renderContacts(loadContacts(), contactGrid);
+  showElement(contactList)
+}
+changeContactComponent.onChangeCanceled = () => {
+  showElement(contactList)
+}
+
 renderContacts(loadContacts(), contactGrid);
-
-
 
 searchContactButton.addEventListener("click", () => {
   const searchValue = searchContactInput.value;
@@ -46,32 +52,19 @@ contactGrid.addEventListener("click", (event) => {
   const buttonName = event.target.textContent;
   const id = event.target.dataset.id;
 
-  console.log(id);
-  const contacts = loadContacts();
   if (buttonName == "Change") {
-    selectedContactId = id;
-    const selectedContact = contacts.find((contact) => contact.id === id);
-    showElement(changeContact);
+    setSelectedContactId(id);
+    changeContactComponent.show();
     hideElement(contactList);
-
-    changeContactInput.value = selectedContact.name;
-    changeEmailInput.value = selectedContact.email;
-    changeGsmInput.value = selectedContact.gsm;
   }
   if (buttonName == "Remove") {
-    selectedContactId = id;
+    setSelectedContactId(id);
+    removeContactComponent.show();
     hideElement(contactList);
-    showElement(removeContact);
-    const selectedContact = contacts.find((contact) => contact.id === id);
-    removeContactCard.innerHTML = `
-  <p class="name">Name: ${selectedContact.name}</p>
-  <p class="email">Email:${selectedContact.email}</p>
-  <p class="gsm">Gsm: ${selectedContact.gsm}</p>`;
   }
+  
 });
 
 quitButton.addEventListener("click", () => {
   window.close();
 });
-
-

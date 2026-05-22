@@ -1,6 +1,6 @@
 import { selectedContactId } from "./state.js";
 import { showElement, hideElement, getById } from "./ui-utils.js";
-import { renderContacts } from "./render.js";
+
 import { loadContacts, saveContacts } from "./storage.js";
 
 const changeContact = getById("change-contact");
@@ -10,12 +10,17 @@ const changeGsmInput = getById("change-gsm-input");
 const changeSubmitButton = getById("change-submit-button");
 const changeCancelButton = getById("change-cancel-button");
 const changeNameCantBeEmpty = getById("change-name-error");
-const contactGrid = getById("contact-grid");
-const contactList = getById("contact-list");
+
 
 export function initChangeContact() {
   const component = {
-    show: () => showElement(changeContact),
+    show: () => {
+        const contact = loadContacts().find((c) => c.id === selectedContactId);
+ changeContactInput.value=contact.name;
+ changeEmailInput.value=contact.email;
+ changeGsmInput.value= contact.gsm;
+ showElement(changeContact)
+    },
     onContactChanged: () => {},
     onChangeCanceled: () => {},
   };
@@ -48,18 +53,15 @@ export function initChangeContact() {
     changeEmailInput.value = "";
     changeGsmInput.value = "";
     saveContacts(updatedContacts);
-    renderContacts(updatedContacts, contactGrid);
-    hideElement(changeContact);
-    showElement(contactList);
+    component.onContactChanged()
   });
 
   changeCancelButton.addEventListener("click", () => {
-    hideElement(changeContact);
     hideElement(changeNameCantBeEmpty);
-    showElement(contactList);
     changeContactInput.value = "";
     changeEmailInput.value = "";
     changeGsmInput.value = "";
+    component.onChangeCanceled();
   });
   return component;
 }
