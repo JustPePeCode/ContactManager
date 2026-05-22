@@ -27,6 +27,7 @@ export function initAddContact() {
       return;
     }
     hideElement(addNameCantBeEmpty);
+    hideElement(addContactPanel)
     const newContact = {
       id: crypto.randomUUID(),
       name: name,
@@ -39,13 +40,12 @@ export function initAddContact() {
     const contacts = loadContacts();
     contacts.push(newContact);
     saveContacts(contacts);
-    hideElement(addContactPanel);
     component.onContactCreated();
   });
 
   addCancelButton.addEventListener("click", () =>  {
-    hideElement(addContactPanel);
     hideElement(addNameCantBeEmpty);
+    hideElement(addContactPanel)
     addContactInput.value = "";
     addEmailInput.value = "";
     addGsmInput.value = "";

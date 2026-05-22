@@ -27,7 +27,9 @@ export function renderContacts(contacts, contactGrid) {
     const removeB = document.createElement("button");
     removeB.dataset.id = contact.id;
     removeB.textContent = "Remove";
+    removeB.classList.add("btn-remove");
     card.appendChild(removeB);
+    
 
     contactGrid.appendChild(card)
   });

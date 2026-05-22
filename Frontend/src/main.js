@@ -9,7 +9,7 @@ import { renderContacts } from "./render.js";
 import { initAddContact } from "./addContact.js";
 import { initChangeContact } from "./changeContact.js";
 import { initRemoveContact } from "./removeContact.js";
-import { selectedContactId, setSelectedContactId } from "./state.js";
+import { setSelectedContactId } from "./state.js";
 
 const searchContactInput = getById("search-contact-input");
 const searchContactButton = getById("search-contact-button");
@@ -28,11 +28,19 @@ addContactComponent.onAddCanceled = () => {
   showElement(contactList);
 };
 
-changeContactComponent.onContactChanged = ( ) => {
+changeContactComponent.onContactChanged = () => {
   renderContacts(loadContacts(), contactGrid);
+  showElement(contactList);
+};
+changeContactComponent.onChangeCanceled = () => {
+  showElement(contactList);
+};
+
+removeContactComponent.onContactRemoved = () => {
+  renderContacts(loadContacts(),contactGrid)
   showElement(contactList)
 }
-changeContactComponent.onChangeCanceled = () => {
+removeContactComponent.onRemoveCanceled = () => {
   showElement(contactList)
 }
 
@@ -62,7 +70,6 @@ contactGrid.addEventListener("click", (event) => {
     removeContactComponent.show();
     hideElement(contactList);
   }
-  
 });
 
 quitButton.addEventListener("click", () => {

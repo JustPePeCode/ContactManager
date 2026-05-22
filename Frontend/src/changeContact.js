@@ -1,6 +1,5 @@
 import { selectedContactId } from "./state.js";
 import { showElement, hideElement, getById } from "./ui-utils.js";
-
 import { loadContacts, saveContacts } from "./storage.js";
 
 const changeContact = getById("change-contact");
@@ -35,6 +34,7 @@ export function initChangeContact() {
       return;
     }
     hideElement(changeNameCantBeEmpty);
+    hideElement(changeContact)
     const updatedContacts = contacts.map((contact) => {
       if (contact.id === selectedContactId) {
         const changedContact = {
@@ -58,6 +58,7 @@ export function initChangeContact() {
 
   changeCancelButton.addEventListener("click", () => {
     hideElement(changeNameCantBeEmpty);
+    hideElement(changeContact)
     changeContactInput.value = "";
     changeEmailInput.value = "";
     changeGsmInput.value = "";
