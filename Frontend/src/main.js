@@ -9,7 +9,9 @@ import { renderContacts } from "./render.js";
 import { initAddContact } from "./addContact.js";
 
 
-
+const addContact = initAddContact();
+const changeContact = initChangeContact();
+const removeContact = initRemoveContact();
 const contactGrid = getById("contact-grid");
 const contactList = getById("contact-list");
 
@@ -68,8 +70,6 @@ contactGrid.addEventListener("click", (event) => {
   <p class="gsm">Gsm: ${selectedContact.gsm}</p>`;
   }
 });
-
-
 
 quitButton.addEventListener("click", () => {
   window.close();

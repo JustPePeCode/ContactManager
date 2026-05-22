@@ -1,5 +1,5 @@
-export let selectedContact = null;
+export let selectedContactId = null;
 
 export function setSelectedContactId(id) {
-  setSelectedContactId = id;
+  selectedContactId = id;
 }

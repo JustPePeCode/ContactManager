@@ -83,19 +83,7 @@ button[type="submit"] {
   display: block;
   margin-top: 10px;
 }
-button[type="Remove"] {
-  background-color: red;
-}
-button[type="Remove"]:hover {
-  background-color: #a93226;
-}
-button[type="Quit"] {
-  color: black;
-  background-color: white;
-}
-button[type="Quit"]:hover {
-  background-color: red;
-}
+
 
 section:last-child {
   border-bottom: none;
@@ -110,3 +98,8 @@ section:last-child {
 .error-message{
   color: red;
 }
+.btn-remove { background-color: red; }
+.btn-remove:hover { background-color: #a93226; }
+
+.btn-quit { color: black; background-color: white; }
+.btn-quit:hover { background-color: red; color: white; }

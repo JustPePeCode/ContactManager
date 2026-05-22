@@ -13,7 +13,7 @@
         <p class="company-name">Herb Inc.</p>
         <p class="company-slogan">All herbs must die!</p>
       </div>
-      <button id="quit-contactmanger-button" type="Quit">Quit</button>
+      <button id="quit-contactmanger-button" class="btn-quit">Quit</button>
     </header>
 
     <section id="contact-list">
@@ -28,15 +28,11 @@
       <div class="grid" id="contact-grid"></div>
     </section>
 
-    <section id="add-contact">
+    <section class="hidden" id="add-contact">
       <h2>Add Contact</h2>
       <div>
         <label>Name (required):</label>
-        <p
-          class="hidden error-message"
-          id="add-name-error"
-          type="error message"
-        >
+        <p class="hidden error-message" id="add-name-error">
           Name cannot be empty!
         </p>
         <input
@@ -65,7 +61,7 @@
       </div>
     </section>
 
-    <section id="change-contact">
+    <section class="hidden" id="change-contact">
       <h2>Change Contact</h2>
       <div>
         <label>Name (required):</label>
@@ -98,14 +94,14 @@
       </div>
     </section>
 
-    <section id="remove-contact">
+    <section class="hidden" id="remove-contact">
       <h2>Remove Contact</h2>
       <p>Are you sure you want to remove this contact?</p>
-      <button id="remove-confrim-button" type="button">
-        Yes, im sure Remove contact
+      <button id="remove-confirm-button" type="button" class="btn-remove">
+        Yes, remove contact
       </button>
       <button id="remove-cancel-button" type="button">
-        No,Dont Remove Contact
+        No, dont remove Contact
       </button>
       <div id="remove-contact-card"></div>
     </section>

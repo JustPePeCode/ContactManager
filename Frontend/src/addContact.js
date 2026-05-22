@@ -11,17 +11,13 @@ const addSubmitButton = getById("add-submit-button");
 const addCancelButton = getById("add-cancel-button");
 const addNameCantBeEmpty = getById("add-name-error");
 
-
-
 export function initAddContact() {
-    const component = {
-  show: () => showElement(addContactPanel),
-  onContactCreated: () => {},
-  onAddCanceled: () => {},
-};
-  addContactButton.addEventListener("click", () => {
-    showElement(addContactPanel);
-  });
+  const component = {
+    show: () => showElement(addContactPanel),
+    onContactCreated: () => {},
+    onAddCanceled: () => {},
+  };
+  addContactButton.addEventListener("click", () => component.show());
   addSubmitButton.addEventListener("click", () => {
     const name = addContactInput.value;
     const email = addEmailInput.value;
@@ -47,12 +43,13 @@ export function initAddContact() {
     component.onContactCreated();
   });
 
-  addCancelButton.addEventListener("click", () => {
+  addCancelButton.addEventListener("click", () =>  {
     hideElement(addContactPanel);
     hideElement(addNameCantBeEmpty);
+    addContactInput.value = "";
+    addEmailInput.value = "";
+    addGsmInput.value = "";
     component.onAddCanceled();
-     
   });
   return component;
- 
 }
