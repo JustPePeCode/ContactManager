@@ -44,6 +44,7 @@ export function initRemoveContact() {
     });
 
     saveContacts(showContacts);
+    hideElement(removeContact);
     component.onContactRemoved();
   });
   removeCancelButton.addEventListener("click", () => {
