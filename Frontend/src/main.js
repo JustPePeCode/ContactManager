@@ -27,6 +27,9 @@ addContactComponent.onContactCreated = () => {
 addContactComponent.onAddCanceled = () => {
   showElement(contactList);
 };
+addContactComponent.onAddStarted = () => {
+  hideElement(contactList);
+};
 
 changeContactComponent.onContactChanged = () => {
   renderContacts(loadContacts(), contactGrid);
