@@ -39,6 +39,7 @@ changeContactComponent.onChangeCanceled = () => {
 removeContactComponent.onContactRemoved = () => {
   renderContacts(loadContacts(),contactGrid)
   showElement(contactList)
+  
 }
 removeContactComponent.onRemoveCanceled = () => {
   showElement(contactList)
