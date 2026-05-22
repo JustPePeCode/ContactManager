@@ -10,15 +10,14 @@ const changeSubmitButton = getById("change-submit-button");
 const changeCancelButton = getById("change-cancel-button");
 const changeNameCantBeEmpty = getById("change-name-error");
 
-
 export function initChangeContact() {
   const component = {
     show: () => {
-        const contact = loadContacts().find((c) => c.id === selectedContactId);
- changeContactInput.value=contact.name;
- changeEmailInput.value=contact.email;
- changeGsmInput.value= contact.gsm;
- showElement(changeContact)
+      const contact = loadContacts().find((c) => c.id === selectedContactId);
+      changeContactInput.value = contact.name;
+      changeEmailInput.value = contact.email;
+      changeGsmInput.value = contact.gsm;
+      showElement(changeContact);
     },
     onContactChanged: () => {},
     onChangeCanceled: () => {},
@@ -34,7 +33,7 @@ export function initChangeContact() {
       return;
     }
     hideElement(changeNameCantBeEmpty);
-    hideElement(changeContact)
+    hideElement(changeContact);
     const updatedContacts = contacts.map((contact) => {
       if (contact.id === selectedContactId) {
         const changedContact = {
@@ -53,12 +52,12 @@ export function initChangeContact() {
     changeEmailInput.value = "";
     changeGsmInput.value = "";
     saveContacts(updatedContacts);
-    component.onContactChanged()
+    component.onContactChanged();
   });
 
   changeCancelButton.addEventListener("click", () => {
     hideElement(changeNameCantBeEmpty);
-    hideElement(changeContact)
+    hideElement(changeContact);
     changeContactInput.value = "";
     changeEmailInput.value = "";
     changeGsmInput.value = "";
