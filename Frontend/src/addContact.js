@@ -1,5 +1,5 @@
 import { showElement, hideElement, getById } from "./ui-utils.js";
-import { renderContacts } from "./render.js";
+
 import { loadContacts, saveContacts } from "./storage.js";
 
 const addContactButton = getById("add-contact-button");

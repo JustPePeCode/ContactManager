@@ -12,8 +12,7 @@ import { initAddContact } from "./addContact.js";
 const addContact = initAddContact();
 const changeContact = initChangeContact();
 const removeContact = initRemoveContact();
-const contactGrid = getById("contact-grid");
-const contactList = getById("contact-list");
+
 
 const searchContactInput = getById("search-contact-input");
 const searchContactButton = getById("search-contact-button");
