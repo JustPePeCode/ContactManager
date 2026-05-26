@@ -5,9 +5,11 @@ namespace ContactManager.Core;
 //Orcestrader
 public class ContactService(InMemoryContactRepository _repository)
 {
-    public void AddContact(string name, string email, string gsmNummer)
+    public int AddContact(string name, string email, string gsmNummer)
     {
-        _repository.Add(new Contact(name, email, gsmNummer));
+        var contact = new Contact(name, email, gsmNummer);
+        _repository.Add(contact);
+        return contact.Id;
     }
 
     public void ChangeContact(int id, string name, string? email, string? gsmNummer)
@@ -45,5 +47,11 @@ public class ContactService(InMemoryContactRepository _repository)
     {
         var contact = _repository.GetById(id);
         _repository.Remove(contact);
+    }
+
+    public IReadOnlyList<Contact> SearchContact(string name)
+    {
+        var result = _repository.Search(name);
+        return result;
     }
 }

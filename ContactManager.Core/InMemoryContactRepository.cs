@@ -16,6 +16,11 @@ public class InMemoryContactRepository()
         contacts.Add(contact);
     }
 
+    public IReadOnlyList<Contact> Search(string name)
+    {
+        return contacts.Where(c => c.Name.Contains(name)).ToList();
+    }
+
     public Contact GetById(int id)
     {
         foreach (var contact in contacts)
