@@ -1,7 +1,7 @@
 namespace ContactManager.Api.Tests;
+
 using System.Net;
 using System.Net.Http.Json;
-
 
 public class ContactApiTests : IClassFixture<CustomWebApplicationFactory>
 {
@@ -32,5 +32,86 @@ public class ContactApiTests : IClassFixture<CustomWebApplicationFactory>
 
         Assert.NotNull(created);
         Assert.NotEqual(0, created.Id);
+    }
+
+    [Fact]
+    public async Task Get_all_contacts_shows_all_contacts()
+    {
+        // Given
+        var client = factory.CreateClient();
+        var request = new CreateContactRequest
+        {
+            Name = "Ada Lovelace",
+            Email = "AdaLoveLace@Gmail.com",
+            GsmNummer = "123456789",
+        };
+        await client.PostAsJsonAsync("/api/contacts", request);
+
+        // When
+        var contacts = await client.GetFromJsonAsync<List<ContactResponse>>("/api/contacts");
+
+        // Then
+        Assert.NotNull(contacts);
+        Assert.NotEmpty(contacts);
+    }
+
+    [Fact]
+    public async Task Get_search_by_name_filters_contacts_by_name()
+    {
+        // Given
+
+        // When
+
+        // Then
+    }
+
+    [Fact]
+    public async Task Put_updates_a_contact()
+    {
+        // Given
+
+        // When
+
+        // Then
+    }
+
+    [Fact]
+    public async Task Put_returns_404_for_missing_contact()
+    {
+        // Given
+
+        // When
+
+        // Then
+    }
+
+    [Fact]
+    public async Task Invalid_input_returns_400()
+    {
+        // Given
+
+        // When
+
+        // Then
+    }
+
+    [Fact]
+    public async Task Delete_Removes_a_contact()
+    {
+        // Given
+
+        // When
+
+        // Then
+    }
+
+    [Fact]
+    public async Task Delete_contact_doesnt_appear_in_GET()
+    {
+        // Given
+
+        // When
+
+        // Then
     }
 }
