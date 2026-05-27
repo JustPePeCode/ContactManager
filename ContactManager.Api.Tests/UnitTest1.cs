@@ -59,10 +59,30 @@ public class ContactApiTests : IClassFixture<CustomWebApplicationFactory>
     public async Task Get_search_by_name_filters_contacts_by_name()
     {
         // Given
-
+        var client = factory.CreateClient();
+        var request = new CreateContactRequest
+        {
+            Name = "Ada Lovelace",
+            Email = "AdaLoveLace@Gmail.com",
+            GsmNummer = "123456789",
+        };
+        await client.PostAsJsonAsync("/api/contacts", request);
+        var request2 = new CreateContactRequest
+        {
+            Name = "Buba",
+            Email = "buba@Gmail.com",
+            GsmNummer = "",
+        };
+        await client.PostAsJsonAsync("/api/contacts", request2);
         // When
+        var results = await client.GetFromJsonAsync<List<ContactResponse>>(
+            "/api/contacts/search?name=Buba"
+        );
 
         // Then
+        Assert.NotNull(results);
+        Assert.Single(results);
+        Assert.Equal("Buba", results[0].Name);
     }
 
     [Fact]
