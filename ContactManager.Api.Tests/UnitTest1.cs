@@ -2,6 +2,8 @@ namespace ContactManager.Api.Tests;
 
 using System.Net;
 using System.Net.Http.Json;
+using Microsoft.AspNetCore.Mvc;
+using NuGet.Frameworks;
 
 public class ContactApiTests : IClassFixture<CustomWebApplicationFactory>
 {
@@ -89,10 +91,26 @@ public class ContactApiTests : IClassFixture<CustomWebApplicationFactory>
     public async Task Put_updates_a_contact()
     {
         // Given
+        var client = factory.CreateClient();
+        var request = new CreateContactRequest
+        {
+            Name = "Ada Lovelace",
+            Email = "AdaLoveLace@Gmail.com",
+            GsmNummer = "123456789",
+        };
+        var updatedRequest = new UpdateContactRequest
+        {
+            Name = "Buba",
+            Email = "ada@gmail.com",
+            GsmNummer = "123456789",
+        };
+        var postResponse = await client.PostAsJsonAsync("/api/contacts", request);
+        var created = await postResponse.Content.ReadFromJsonAsync<CreateContactResponse>();
 
         // When
-
+        var response = await client.PutAsJsonAsync($"/api/contacts/{created.Id}", updatedRequest);
         // Then
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
 
     [Fact]
