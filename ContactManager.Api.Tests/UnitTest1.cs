@@ -2,6 +2,7 @@ namespace ContactManager.Api.Tests;
 
 using System.Net;
 using System.Net.Http.Json;
+using ContactManager.Core;
 using Microsoft.AspNetCore.Mvc;
 using NuGet.Frameworks;
 
@@ -117,10 +118,18 @@ public class ContactApiTests : IClassFixture<CustomWebApplicationFactory>
     public async Task Put_returns_404_for_missing_contact()
     {
         // Given
+        var client = factory.CreateClient();
+        var updateRequest = new UpdateContactRequest
+        {
+            Name = "Test",
+            Email = "",
+            GsmNummer = "",
+        };
 
         // When
-
+        var response = await client.PutAsJsonAsync("/api/contacts/999", updateRequest);
         // Then
+        Assert.Equal(HttpStatusCode.NotFound, response.StatusCode);
     }
 
     [Fact]
