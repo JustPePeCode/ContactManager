@@ -18,6 +18,7 @@ public class ContactApiTests : IClassFixture<CustomWebApplicationFactory>
     [Fact]
     public async Task Post_contact_creates_a_contact()
     {
+        // Given
         var client = factory.CreateClient();
 
         var request = new CreateContactRequest
@@ -26,13 +27,13 @@ public class ContactApiTests : IClassFixture<CustomWebApplicationFactory>
             Email = "AdaLoveLace@Gmail.com",
             GsmNummer = "123456789",
         };
-
+        //When
         var response = await client.PostAsJsonAsync("/api/contacts", request);
 
+        //Then
         Assert.Equal(HttpStatusCode.Created, response.StatusCode);
 
         var created = await response.Content.ReadFromJsonAsync<CreateContactResponse>();
-
         Assert.NotNull(created);
         Assert.NotEqual(0, created.Id);
     }
@@ -137,7 +138,7 @@ public class ContactApiTests : IClassFixture<CustomWebApplicationFactory>
     {
         // Given
 
-        // When
+        // When 
 
         // Then
     }
