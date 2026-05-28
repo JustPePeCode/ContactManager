@@ -81,7 +81,7 @@ public class ContactController : ControllerBase
             return NotFound();
         }
         _service.RemoveContact(id);
-        return Ok();
+        return NoContent();
     }
     //DELETE /contacts/{id}
 }

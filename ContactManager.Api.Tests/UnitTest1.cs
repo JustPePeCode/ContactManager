@@ -6,14 +6,9 @@ using ContactManager.Core;
 using Microsoft.AspNetCore.Mvc;
 using NuGet.Frameworks;
 
-public class ContactApiTests : IClassFixture<CustomWebApplicationFactory>
+public class ContactApiTests
 {
-    private readonly CustomWebApplicationFactory factory;
-
-    public ContactApiTests(CustomWebApplicationFactory factory)
-    {
-        this.factory = factory;
-    }
+    private readonly CustomWebApplicationFactory factory = new();
 
     [Fact]
     public async Task Post_contact_creates_a_contact()
@@ -87,6 +82,7 @@ public class ContactApiTests : IClassFixture<CustomWebApplicationFactory>
         Assert.NotNull(results);
         Assert.Single(results);
         Assert.Equal("Buba", results[0].Name);
+
     }
 
     [Fact]
@@ -137,29 +133,64 @@ public class ContactApiTests : IClassFixture<CustomWebApplicationFactory>
     public async Task Invalid_input_returns_400()
     {
         // Given
+        var client = factory.CreateClient();
+
+        var request = new CreateContactRequest
+        {
+            Name = "",
+            Email = "AdaLoveLace@Gmail.com",
+            GsmNummer = "123456789",
+        };
+
 
         // When 
+        var response = await client.PostAsJsonAsync("/api/contacts", request);
 
         // Then
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+
     }
+
 
     [Fact]
     public async Task Delete_Removes_a_contact()
     {
         // Given
-
+        var client = factory.CreateClient();
+        var request = new CreateContactRequest
+        {
+            Name = "Ada Lovelace",
+            Email = "AdaLoveLace@Gmail.com",
+            GsmNummer = "123456789",
+        };
+        var postResponse = await client.PostAsJsonAsync("/api/contacts", request);
+        var created = await postResponse.Content.ReadFromJsonAsync<CreateContactResponse>();
         // When
-
+        var response = await client.DeleteAsync($"/api/contacts/{created.Id}");
         // Then
+         
+          Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
     }
 
     [Fact]
     public async Task Delete_contact_doesnt_appear_in_GET()
     {
         // Given
+        var client = factory.CreateClient();
+        var request = new CreateContactRequest
+        {
+            Name = "Ada Lovelace",
+            Email = "AdaLoveLace@Gmail.com",
+            GsmNummer = "123456789",
+        };
+        var postResponse = await client.PostAsJsonAsync("/api/contacts", request);
+        var created = await postResponse.Content.ReadFromJsonAsync<CreateContactResponse>();
 
         // When
+        var response = await client.DeleteAsync($"/api/contacts/{created.Id}");
+        var contacts = await client.GetFromJsonAsync<List<ContactResponse>>("/api/contacts");
 
         // Then
+        Assert.DoesNotContain(contacts, c =>c.Id == created.Id);
     }
 }
