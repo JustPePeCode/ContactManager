@@ -22,5 +22,6 @@ export function useSearchContacts(name:string){
     return useQuery({
         queryKey: ["contacts",name],
         queryFn: () =>searchContacts(name)
+        
     });
 }
