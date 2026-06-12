@@ -7,7 +7,12 @@ export function ContactList() {
   const { data, isLoading } = useContacts();
 
   if (isLoading) {
-    return "laden . . ."
+    return <p>laden . . . </p>
+  }
+  
+  if(data?.length===0)
+  {
+    return <p>no contacts</p>;
   }
 
   return (
